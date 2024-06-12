@@ -1,0 +1,118 @@
+<ng-template #content let-studente>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Crea Studente</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="studente.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form #registraStudente="ngForm">
+			<div class="row g-3">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Nome" aria-label="Nome" name="nome" ngModel>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Cognome" aria-label="Cognome" name="cognome" ngModel>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col">
+          <!-- <div class="input-group">
+            <input type="text" placeholder="dd-mm-yyyy" class="form-control" ngbDatepicker #d="ngbDatepicker" aria-label="Data di Nascita" name="dataDiNascita" ngModel>
+            <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+          </div> -->
+          <input type="date" class="form-control" aria-label="Data di Nascita" name="dataDiNascita" ngModel [max]="data">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Codice Fiscale" aria-label="Codice Fiscale" name="codiceFiscale" ngModel>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col">
+          <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" ngModel>
+        </div>
+        <div class="col">
+          <input type="password" class="form-control" placeholder="Password" aria-label="Password" name="password" ngModel>
+        </div>
+      </div>
+      <hr>
+      <div class="row g-3">
+        <div class="col-6">
+          <input type="text" class="form-control" placeholder="Indirizzo" aria-label="Indirizzo" name="via" ngModel>
+        </div>
+        <div class="col-3">
+          <input type="text" maxlength="2" class="form-control" placeholder="Civico" aria-label="Civico" name="numeroCivico" ngModel>
+        </div>
+        <div class="col-3">
+          <input type="text" maxlength="5" class="form-control" placeholder="CAP" aria-label="CAP" name="cap" ngModel>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Città" aria-label="Città" name="citta" ngModel>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Provincia" aria-label="Provincia" name="provincia" ngModel>
+        </div>
+      </div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-success" (click)="onSubmit(registraStudente);studente.close('Save click')">Salva</button>
+		<button type="button" class="btn btn-danger" (click)="studente.close('Annulla click')">Annulla</button>
+	</div>
+</ng-template>
+
+<div class="container">
+    <h1 class="text-center">GESTIONE STUDENTI</h1>
+    <hr>
+    <div class="row">
+        <div class="col-3">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Cerca</button>
+              </form>
+        </div>
+        <div class="col-6"></div>
+        <div class="col-3">
+            <button class="btn btn-success" type="button" (click)="open(content)">AGGIUNGI STUDENTE</button>
+        </div>
+    </div>
+    <hr>
+    <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Cognome</th>
+            <th scope="col" class="d-none d-md-table-cell">Classe</th>
+            <th scope="col" class="d-none d-md-table-cell">Stato</th>
+            <th scope="col">Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of studenti; let i = index">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.nome}}</td>
+            <td>{{item.cognome}}</td>
+            <td class="d-none d-md-table-cell">3^D</td>
+            <td class="d-none d-md-table-cell">FREQUENTANTE</td>
+            <td><button class="btn btn-primary" type="button">Visualizza</button></td>
+          </tr>
+          <!-- <tr>
+            <th scope="row">2</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>3^D</td>
+            <td>FREQUENTANTE</td>
+            <td><button class="btn btn-primary" type="button">Visualizza</button></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>3^D</td>
+            <td>FREQUENTANTE</td>
+            <td><button class="btn btn-primary" type="button">Visualizza</button></td>
+          </tr> -->
+        </tbody>
+      </table>
+</div>

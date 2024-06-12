@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="text-center fw-bold display-5">REGISTRO ELETTRONICO</div>
+    <br />
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="codiceScuola" [(ngModel)]="codiceScuola" placeholder="Codice Istituto" required>
+                    <label for="codiceScuola">Codice Istituto</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="username" [(ngModel)]="username" placeholder="Username" required>
+                    <label for="username">Username</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="password" [(ngModel)]="password" placeholder="Password" required>
+                    <label for="password">Password</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-outline-success"[disabled]="areInputEmpty()" (click)="submit()">Entra</button>
+    </div>
+    <br />
+    <div class="container">
+        <h4>Info</h4>
+        <p class="fst-italic">I dati da inserire in questa pagina ti sono stati forniti dalla segreteria dell'istituto</p>
+    </div>
+</div>
