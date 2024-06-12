@@ -1,18 +1,17 @@
 import { Component, TemplateRef, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthData } from 'src/app/interface/auth-data.interface';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Studente } from 'src/app/interface/studente.interface';
 import { User } from 'src/app/interface/user.interface';
 import { AuthService } from 'src/app/service/auth.service';
 import { StudentiService } from 'src/app/service/studenti.service';
 
 @Component({
-  selector: 'app-gestione-studenti',
-  templateUrl: './gestione-studenti.component.html',
-  styleUrls: ['./gestione-studenti.component.scss']
+  selector: 'app-gestione-docenti',
+  templateUrl: './gestione-docenti.component.html',
+  styleUrls: ['./gestione-docenti.component.scss']
 })
-export class GestioneStudentiComponent {
+export class GestioneDocentiComponent {
   private modalService = inject(NgbModal);
   closeResult = '';
   model: {

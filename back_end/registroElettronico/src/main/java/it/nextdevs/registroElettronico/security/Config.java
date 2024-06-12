@@ -33,6 +33,7 @@ public class Config implements WebMvcConfigurer {
 
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/auth/**").permitAll());
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/studenti/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/docenti/**").permitAll());
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/**").denyAll());
 
         return httpSecurity.build();
@@ -42,7 +43,7 @@ public class Config implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:4200")
-                .allowedMethods("GET", "POST");
+                .allowedMethods("GET", "POST", "PUT","DELETE");
     }
 
     @Bean

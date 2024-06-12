@@ -1,7 +1,7 @@
-<ng-template #content let-studente>
+<ng-template #content let-docente>
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Crea Studente</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="studente.dismiss('Cross click')"></button>
+		<h4 class="modal-title" id="modal-basic-title">Crea Docente</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="docente.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
 		<form #registraStudente="ngForm">
@@ -85,14 +85,14 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-success" *ngIf="!inEdit" (click)="onSubmit(registraStudente);studente.close('Save click')">Salva</button>
-		<button type="button" class="btn btn-success" *ngIf="inEdit" (click)="update(registraStudente);studente.close('Save click')">Aggiorna</button>
-		<button type="button" class="btn btn-danger" (click)="studente.close('Annulla click')">Annulla</button>
+		<button type="button" class="btn btn-success" *ngIf="!inEdit" (click)="onSubmit(registraStudente);docente.close('Save click')">Salva</button>
+		<button type="button" class="btn btn-success" *ngIf="inEdit" (click)="update(registraStudente);docente.close('Save click')">Aggiorna</button>
+		<button type="button" class="btn btn-danger" (click)="docente.close('Annulla click')">Annulla</button>
 	</div>
 </ng-template>
 
 <div class="container">
-    <h1 class="text-center">GESTIONE STUDENTI</h1>
+    <h1 class="text-center">GESTIONE DOCENTI</h1>
     <hr>
     <div class="row">
         <div class="col-3">
@@ -103,7 +103,7 @@
         </div>
         <div class="col-6"></div>
         <div class="col-3">
-            <button class="btn btn-success" type="button" (click)="open(content)">AGGIUNGI STUDENTE</button>
+            <button class="btn btn-success" type="button" (click)="open(content)">AGGIUNGI DOCENTE</button>
         </div>
     </div>
     <hr>
@@ -113,7 +113,6 @@
             <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">Cognome</th>
-            <th scope="col" class="d-none d-md-table-cell">Classe</th>
             <th scope="col" class="d-none d-md-table-cell">Stato</th>
             <th scope="col">Azioni</th>
           </tr>
@@ -123,26 +122,9 @@
             <th scope="row">{{item.id}}</th>
             <td>{{item.nome}}</td>
             <td>{{item.cognome}}</td>
-            <td class="d-none d-md-table-cell">3^D</td>
-            <td class="d-none d-md-table-cell">FREQUENTANTE</td>
+            <td class="d-none d-md-table-cell">DI RUOLO</td>
             <td><button class="btn btn-primary" type="button" (click)="open(content, i)">Visualizza</button></td>
           </tr>
-          <!-- <tr>
-            <th scope="row">2</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>3^D</td>
-            <td>FREQUENTANTE</td>
-            <td><button class="btn btn-primary" type="button">Visualizza</button></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>3^D</td>
-            <td>FREQUENTANTE</td>
-            <td><button class="btn btn-primary" type="button">Visualizza</button></td>
-          </tr> -->
         </tbody>
       </table>
 </div>

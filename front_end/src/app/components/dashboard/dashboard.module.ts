@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { GestioneDocentiComponent } from './gestione-docenti/gestione-docenti.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     DashboardComponent,
     GestioneStudentiComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    GestioneDocentiComponent
   ],
   imports: [
     CommonModule,

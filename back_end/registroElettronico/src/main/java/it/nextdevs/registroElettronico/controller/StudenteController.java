@@ -1,6 +1,7 @@
 package it.nextdevs.registroElettronico.controller;
 
 import it.nextdevs.registroElettronico.dto.StudenteIndirizzoDto;
+import it.nextdevs.registroElettronico.dto.StudenteSPIndirizzoDto;
 import it.nextdevs.registroElettronico.exception.NonAutorizzatoException;
 import it.nextdevs.registroElettronico.model.Studente;
 import it.nextdevs.registroElettronico.service.StudenteService;
@@ -26,11 +27,18 @@ public class StudenteController {
     @PostMapping("/studenti")
    @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
     public Integer saveStudente(@RequestBody @Validated StudenteIndirizzoDto studenteIndirizzoDto, BindingResult bindingResult) {
-        System.out.println(studenteIndirizzoDto);
         if (bindingResult.hasErrors()) {
             throw new NonAutorizzatoException("Problemi");
         }
-        System.out.println("suca");
         return studenteService.salvaStudente(studenteIndirizzoDto);
+    }
+
+    @PutMapping("/studenti/{id}")
+    @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
+    public Studente updateStudente(@RequestBody @Validated StudenteSPIndirizzoDto studenteSPIndirizzoDto, BindingResult bindingResult, @PathVariable Integer id) {
+        if (bindingResult.hasErrors()) {
+            throw new NonAutorizzatoException("Problemi");
+        }
+        return studenteService.updateStudente(studenteSPIndirizzoDto, id);
     }
 }

@@ -21,4 +21,7 @@ public class Indirizzo {
     @OneToMany(mappedBy = "indirizzo")
     @JsonIgnore
     List<Studente> studenti;
+    @OneToMany(mappedBy = "indirizzo")
+    @JsonIgnore
+    List<Docente> docenti;
 }

@@ -1,6 +1,7 @@
 package it.nextdevs.registroElettronico.service;
 
 import it.nextdevs.registroElettronico.dto.StudenteIndirizzoDto;
+import it.nextdevs.registroElettronico.dto.StudenteSPIndirizzoDto;
 import it.nextdevs.registroElettronico.exception.NonAutorizzatoException;
 import it.nextdevs.registroElettronico.model.Indirizzo;
 import it.nextdevs.registroElettronico.model.Istituto;
@@ -64,7 +65,49 @@ public class StudenteService {
         }
     }
 
+    public Studente updateStudente(StudenteSPIndirizzoDto studenteSPIndirizzoDto, Integer id) {
+        Optional<Studente> studenteOptional = studenteRepository.findById(id);
+        if (studenteOptional.isPresent()) {
+            Studente studente = studenteOptional.get();
+            studente.setNome(studenteSPIndirizzoDto.getNome());
+            studente.setCognome(studenteSPIndirizzoDto.getCognome());
+            studente.setEmail(studenteSPIndirizzoDto.getEmail());
+            studente.setDataDiNascita(studenteSPIndirizzoDto.getDataDiNascita());
+            studente.setCodiceFiscale(studenteSPIndirizzoDto.getCodiceFiscale());
+            Optional<Istituto> istitutoOptional = istitutoRepository.findById(studenteSPIndirizzoDto.getCodiceIstituto());
+            istitutoOptional.ifPresent(studente::setIstituto);
+            Optional<Indirizzo> indirizzoOptional = indirizzoRepository.findByViaAndNumeroCivicoAndCittaAndProvincia(
+                    studenteSPIndirizzoDto.getVia(),
+                    studenteSPIndirizzoDto.getNumeroCivico(),
+                    studenteSPIndirizzoDto.getCitta(),
+                    studenteSPIndirizzoDto.getProvincia()
+            );
+            Indirizzo indirizzo = getIndirizzo(studenteSPIndirizzoDto, indirizzoOptional);
+            studente.setIndirizzo(indirizzo);
+            studenteRepository.save(studente);
+            return studente;
+        } else {
+            throw new NonAutorizzatoException("Utente non esistente");
+        }
+    }
+
     private Indirizzo getIndirizzo(StudenteIndirizzoDto studenteIndirizzoDto, Optional<Indirizzo> indirizzoOptional) {
+        Indirizzo indirizzo;
+        if (indirizzoOptional.isPresent()) {
+            indirizzo = indirizzoOptional.get();
+        } else {
+            indirizzo = new Indirizzo();
+            indirizzo.setCap(studenteIndirizzoDto.getCap());
+            indirizzo.setCitta(studenteIndirizzoDto.getCitta());
+            indirizzo.setVia(studenteIndirizzoDto.getVia());
+            indirizzo.setProvincia(studenteIndirizzoDto.getProvincia());
+            indirizzo.setNumeroCivico(studenteIndirizzoDto.getNumeroCivico());
+            indirizzo = indirizzoRepository.save(indirizzo);
+        }
+        return indirizzo;
+    }
+
+    private Indirizzo getIndirizzo(StudenteSPIndirizzoDto studenteIndirizzoDto, Optional<Indirizzo> indirizzoOptional) {
         Indirizzo indirizzo;
         if (indirizzoOptional.isPresent()) {
             indirizzo = indirizzoOptional.get();

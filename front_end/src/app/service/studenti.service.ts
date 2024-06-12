@@ -51,4 +51,27 @@ export class StudentiService {
       })
     )
   }
+
+  updateStudente(data:{
+    nome: string,
+    cognome: string,
+    dataDiNascita: Date,
+    codiceFiscale: string,
+    email: string,
+    password: string,
+    codiceIstituto: string,
+    via: string,
+    numeroCivico: string,
+    citta: string,
+    provincia: string,
+    cap: string
+  }, id: number | undefined) {
+    return this.http.put<Studente>(`${this.generalApi}/studenti/${id}`, data).pipe(
+      tap(data => {
+        this.getAllStudenti().subscribe((data2) => {
+          this.studentiSub.next(data2);
+        })
+      })
+    )
+  }
 }
