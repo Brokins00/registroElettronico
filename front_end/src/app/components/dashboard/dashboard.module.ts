@@ -9,6 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { GestioneDocentiComponent } from './gestione-docenti/gestione-docenti.component';
+import { GestioneClassiComponent } from './gestione-classi/gestione-classi.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { GestioneDocentiComponent } from './gestione-docenti/gestione-docenti.co
     GestioneStudentiComponent,
     HomeComponent,
     NavbarComponent,
-    GestioneDocentiComponent
+    GestioneDocentiComponent,
+    GestioneClassiComponent
   ],
   imports: [
     CommonModule,

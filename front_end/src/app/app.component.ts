@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
       this.authSrv.user$.subscribe((value) => {
         this.user = value
         if (this.user !== null) {
-          this.router.navigate(['/dashboard'])
+          // this.router.navigate(['/dashboard/home'])
         }
       })
   }

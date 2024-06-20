@@ -34,6 +34,10 @@ public class Config implements WebMvcConfigurer {
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/auth/**").permitAll());
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/studenti/**").permitAll());
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/docenti/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/anni-scolastici/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/festivita/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/indirizzi-scolastici/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/classi/**").permitAll());
         httpSecurity.authorizeHttpRequests(http->http.requestMatchers("/**").denyAll());
 
         return httpSecurity.build();

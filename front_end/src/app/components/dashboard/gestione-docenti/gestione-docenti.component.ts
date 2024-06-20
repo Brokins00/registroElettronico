@@ -1,10 +1,10 @@
 import { Component, TemplateRef, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Studente } from 'src/app/interface/studente.interface';
+import { Docente } from 'src/app/interface/docente.interface';
 import { User } from 'src/app/interface/user.interface';
 import { AuthService } from 'src/app/service/auth.service';
-import { StudentiService } from 'src/app/service/studenti.service';
+import { DocentiService } from 'src/app/service/docenti.service';
 
 @Component({
   selector: 'app-gestione-docenti',
@@ -30,10 +30,10 @@ export class GestioneDocentiComponent {
   } = {};
   inEdit: boolean = false;
   private user!: User | undefined;
-  studenti!: Studente[] | null;
+  docenti!: Docente[] | null;
   data!:string;
 
-  constructor(private studenteSrv: StudentiService, private authSrv: AuthService) {
+  constructor(private docenteSrv: DocentiService, private authSrv: AuthService) {
     let today = new Date();
     let dd:number|string = today.getDate();
     let mm:number|string = today.getMonth()+1;
@@ -50,25 +50,25 @@ export class GestioneDocentiComponent {
     this.authSrv.user$.subscribe(data => {
       this.user = data?.user;
     })
-    this.studenteSrv.studenti$.subscribe((data) => {
-      this.studenti = data;
+    this.docenteSrv.docenti$.subscribe((data) => {
+      this.docenti = data;
     })
   }
 
   open(content: TemplateRef<any>, index?:number) {
-    if (index !== undefined && this.studenti) {
-      console.log(index, this.studenti[index])
-      this.model.nome = this.studenti[index].nome;
-      this.model.cognome = this.studenti[index].cognome;
-      this.model.dataDiNascita = this.studenti[index].dataDiNascita;
-      this.model.codiceFiscale = this.studenti[index].codiceFiscale;
-      this.model.email = this.studenti[index].email;
-      this.model.via = this.studenti[index].indirizzo.via;
-      this.model.numeroCivico = this.studenti[index].indirizzo.numeroCivico;
-      this.model.citta = this.studenti[index].indirizzo.citta;
-      this.model.provincia = this.studenti[index].indirizzo.provincia;
-      this.model.cap = this.studenti[index].indirizzo.cap;
-      this.model.id = this.studenti[index].id
+    if (index !== undefined && this.docenti) {
+      console.log(index, this.docenti[index])
+      this.model.nome = this.docenti[index].nome;
+      this.model.cognome = this.docenti[index].cognome;
+      this.model.dataDiNascita = this.docenti[index].dataDiNascita;
+      this.model.codiceFiscale = this.docenti[index].codiceFiscale;
+      this.model.email = this.docenti[index].email;
+      this.model.via = this.docenti[index].indirizzo.via;
+      this.model.numeroCivico = this.docenti[index].indirizzo.numeroCivico;
+      this.model.citta = this.docenti[index].indirizzo.citta;
+      this.model.provincia = this.docenti[index].indirizzo.provincia;
+      this.model.cap = this.docenti[index].indirizzo.cap;
+      this.model.id = this.docenti[index].id
       this.inEdit = true;
     } else {
       this.inEdit = false;
@@ -83,16 +83,16 @@ export class GestioneDocentiComponent {
 
   onSubmit(form: NgForm) {
     form.value.codiceIstituto = this.user?.istituto.codiceUnivoco
-    this.studenteSrv.saveStudente(form.value).subscribe((data) => {
-      console.log('Creato studente '+data)
+    this.docenteSrv.saveDocente(form.value).subscribe((data) => {
+      console.log('Creato docente '+data)
     })
   }
 
   update(form: NgForm) {
     form.value.codiceIstituto = this.user?.istituto.codiceUnivoco
     console.log(form.value, this.model.id)
-    this.studenteSrv.updateStudente(form.value, this.model.id).subscribe((data) => {
-      console.log('Studente aggiornato')
+    this.docenteSrv.updateDocente(form.value, this.model.id).subscribe((data) => {
+      console.log('Docente aggiornato')
     })
   }
 

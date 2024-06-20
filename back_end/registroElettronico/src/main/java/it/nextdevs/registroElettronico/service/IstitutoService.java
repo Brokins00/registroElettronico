@@ -39,6 +39,10 @@ public class IstitutoService {
         }
     }
 
+    public void updateIstituto(Istituto istituto) {
+        istitutoRepository.save(istituto);
+    }
+
     public String deleteIstituto(String id) throws BadRequestException {
         Optional<Istituto> istitutoOptional = getIstitutoById(id);
 

@@ -26,6 +26,18 @@
                             Studenti
                         </a>
                     </li>
+                    <li *ngIf="user?.ruoloUtente=='SEGRETERIA'">
+                        <a [routerLink]="['/dashboard/docenti']" routerLinkActive="active" class="nav-link text-white">
+                            <i class="bi bi-people d-block mx-auto mb-1 text-center"></i>
+                            Docenti
+                        </a>
+                    </li>
+                    <li *ngIf="user?.ruoloUtente=='SEGRETERIA'">
+                        <a [routerLink]="['/dashboard/classi']" routerLinkActive="active" class="nav-link text-white">
+                            <i class="bi bi-people d-block mx-auto mb-1 text-center"></i>
+                            Classi
+                        </a>
+                    </li>
                     <li class="dropdown d-flex justify-content-center align-content-center">
                         <a href="javascript:void(0)" class="d-block link-body-emphasis text-decoration-none dropdown-toggle align-content-center" data-bs-toggle="dropdown" aria-expanded="false">
                           <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
