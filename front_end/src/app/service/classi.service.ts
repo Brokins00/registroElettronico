@@ -9,6 +9,7 @@ import { Festivita } from '../interface/festivita.interface';
 import { Indirizzo } from '../interface/indirizzo.interface';
 import { IndirizzoScolastico } from '../interface/indirizzo-scolastico.interface';
 import { Classe } from '../interface/classe.interface';
+import { Studente } from '../interface/studente.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class ClassiService {
   indiscol$=this.indirizziSub.asObservable();
   private classeSub = new BehaviorSubject<Classe[] | null>(null)
   classi$=this.classeSub.asObservable();
+  private studenteSub = new BehaviorSubject<Studente[] | null>(null)
+  studenti$ = this.studenteSub.asObservable();
   constructor(private http: HttpClient, private router:Router, private authSrv: AuthService) {
     this.authSrv.user$.subscribe(data => {
       if (data == null) {
@@ -36,6 +39,9 @@ export class ClassiService {
     this.getAllClassi().subscribe((data2: Classe[]) => {
       this.classeSub.next(data2);
     })
+    this.getAllStudenti().subscribe((data2: Studente[]) => {
+      this.studenteSub.next(data2);
+    })
   }
 
   private getAllIndirizzi() {
@@ -50,6 +56,10 @@ export class ClassiService {
     return this.http.get<AnnoScolastico[]>(`${this.generalApi}/anni-scolastici`)
   }
 
+  private getAllStudenti() {
+    return this.http.get<Studente[]>(`${this.generalApi}/studenti`)
+  }
+
   saveAnno(data: {
     inizio?: string,
     fine?: string,
@@ -60,7 +70,7 @@ export class ClassiService {
         if (data3) {
           data.festivita.forEach(festivita => {
             festivita.annoScolastico = data3;
-            this.saveFestivita(festivita)
+            this.saveFestivita(festivita).subscribe();
           })
         }
         this.getAllAnni().subscribe((data2) => {
@@ -68,6 +78,100 @@ export class ClassiService {
         });
       })
     )
+  }
+
+  updateClasse(data: {
+    nome: string|undefined,
+    indirizzo: number,
+    studenti: Studente[],
+    codiceIstituto: string | undefined,
+    annoScolastico: number | undefined
+  }, id: number | undefined) {
+    console.log(data, id)
+    return this.http.put<Classe>(`${this.generalApi}/classi/${id}`, data).pipe(
+      tap(data3 => {
+        if (data3) {
+          let nuoviStudenti: number[] = []
+          if (data.studenti) {
+            data.studenti.forEach(studente => {
+              let found = false;
+              data3.studenti.forEach(studente2 => {
+                if (studente2.id == studente.id) {
+                  found = true
+                }
+              })
+              if (!found) {
+                if (studente.id) {
+                  nuoviStudenti.push(studente.id)
+                }
+              }
+            })
+          }
+          console.log('suca', nuoviStudenti)
+          if (data3.id && nuoviStudenti.length > 0) this.patchClasseStudenti(nuoviStudenti, data3.id).subscribe();
+          this.getAllClassi().subscribe((data2: Classe[]) => {
+            this.classeSub.next(data2);
+          });
+          this.getAllIndirizzi().subscribe((data2: IndirizzoScolastico[]) => {
+            this.indirizziSub.next(data2);
+          });
+          this.getAllStudenti().subscribe((data2: Studente[]) => {
+            this.studenteSub.next(data2);
+          })
+        }
+      })
+    )
+  }
+
+  updateAnno(data: {
+    inizio?: string,
+    fine?: string,
+    festivita?: Festivita[],
+    studenti?: Studente[]
+  }, id: number|undefined) {
+    return this.http.put<AnnoScolastico>(`${this.generalApi}/anni-scolastici/${id}`, data).pipe(
+      tap(data3 => {
+        if (data3) {
+          if (data.festivita) {
+            data.festivita.forEach(festivita => {
+              festivita.annoScolastico = data3.id;
+              this.updateFestivita(festivita).subscribe()
+            })
+          }
+          let nuoviStudenti: number[] = []
+          if (data.studenti) {
+            data.studenti.forEach(studente => {
+              let found = false;
+              data3.studenti.forEach(studente2 => {
+                if (studente2.id == studente.id) {
+                  found = true
+                }
+              })
+              if (!found) {
+                if (studente.id) {
+                  nuoviStudenti.push(studente.id)
+                }
+              }
+            })
+          }
+          if (data3.id && nuoviStudenti.length > 0) this.patchAnnoStudenti(nuoviStudenti, data3.id).subscribe();
+          this.getAllAnni().subscribe((data2: AnnoScolastico[]) => {
+            this.anniSub.next(data2);
+          });
+          this.getAllStudenti().subscribe((data2: Studente[]) => {
+            this.studenteSub.next(data2);
+          })
+        }
+      })
+    )
+  }
+
+  patchAnnoStudenti(studenti: number[], id: number) {
+    return this.http.patch<AnnoScolastico>(`${this.generalApi}/anni-scolastici/${id}/studenti`, {studenti: studenti})
+  }
+
+  patchClasseStudenti(studenti: number[], id: number) {
+    return this.http.patch<Classe>(`${this.generalApi}/classi/${id}/studenti`, {studenti: studenti})
   }
 
   saveClasse(data: {
@@ -88,5 +192,9 @@ export class ClassiService {
 
   saveFestivita(data:Festivita) {
     return this.http.post<number>(`${this.generalApi}/festivita`, data)
+  }
+
+  updateFestivita(data: Festivita) {
+    return this.http.put<Festivita>(`${this.generalApi}/festivita`, data);
   }
 }

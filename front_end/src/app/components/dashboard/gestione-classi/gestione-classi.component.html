@@ -199,13 +199,37 @@
                     <button type="button" class="btn btn-danger" id="elimina" name="{{i}}" (click)="removeFestivita(i)"><i class="bi bi-trash text-white"></i></button>
                 </div>
             </div>
+            <div *ngIf="inEditAnno">
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h3>Studenti: {{model.studenti?.length}}</h3>
+                    <select class="form-select" id="studenti" name="studenti" (change)="addStudenteToAnno(studenteAnno.value); studenteAnno.selectedIndex = 0" #studenteAnno>
+                        <option selected [value]="null">Seleziona Studente</option>
+                        <option *ngFor="let studente of filteredStudenti; let i = index" [value]="studente.id">{{studente.nome}} {{studente.cognome}} - {{studente.dataDiNascita}}</option>
+                    </select>
+                </div>
+                <div class="row" *ngFor="let item of model.studenti">
+                    <div class="col-3">
+                        {{item.id}}
+                    </div>
+                    <div class="col-3">
+                        {{item.nome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.cognome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.dataDiNascita}}
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
         <button
             type="button"
             class="btn btn-success"
-            *ngIf="!inEdit"
+            *ngIf="!inEditAnno"
             (click)="onSubmitAnno(registraAnnoScolastico); annoScolastico.close('Save click')"
         >
             Salva
@@ -213,7 +237,7 @@
         <button
             type="button"
             class="btn btn-success"
-            *ngIf="inEdit"
+            *ngIf="inEditAnno"
             (click)="updateAnno(registraAnnoScolastico); annoScolastico.close('Save click')"
         >
             Aggiorna
@@ -230,7 +254,7 @@
 
 <ng-template #content2 let-classe>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Crea Classe</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{!inEditClasse ? "Crea Classe" : "Modifica Classe"}}</h4>
         <button
             type="button"
             class="btn-close"
@@ -261,13 +285,37 @@
                     </select>
                 </div>
             </div>
+            <div *ngIf="inEditClasse">
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <h3>Studenti: {{model2.studenti.length}}</h3>
+                    <select class="form-select" id="studenti" name="studenti" (change)="addStudenteToClasse(studenteClasse.value); studenteClasse.selectedIndex = 0" #studenteClasse>
+                        <option selected [value]="null">Seleziona Studente</option>
+                        <option *ngFor="let studente of filteredStudenti2; let i = index" [value]="i">{{studente.nome}} {{studente.cognome}} - {{studente.dataDiNascita}}</option>
+                    </select>
+                </div>
+                <div class="row" *ngFor="let item of model2.studenti">
+                    <div class="col-3">
+                        {{item.id}}
+                    </div>
+                    <div class="col-3">
+                        {{item.nome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.cognome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.dataDiNascita}}
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
         <button
             type="button"
             class="btn btn-success"
-            *ngIf="!inEdit"
+            *ngIf="!inEditClasse"
             (click)="onSubmitClasse(registraClasse); classe.close('Save click')"
         >
             Salva
@@ -275,7 +323,7 @@
         <button
             type="button"
             class="btn btn-success"
-            *ngIf="inEdit"
+            *ngIf="inEditClasse"
             (click)="updateClasse(registraClasse); classe.close('Save click')"
         >
             Aggiorna
@@ -296,10 +344,13 @@
     <div class="d-flex justify-content-between mb-3">
         <div class="d-flex flex-column">
             <h3>Anno Scolastico </h3>
-            <select class="form-select" (change)="selectYear(selezionaAnno.value)" #selezionaAnno>
-                <option selected>Seleziona Anno</option>
-                <option *ngFor="let anno of anni; let i = index" [value]="anno.id">{{anno.inizio.slice(0, 4)}}/{{anno.fine.slice(0, 4)}}</option>
-            </select>
+            <div class="d-flex">
+                <select class="form-select me-2" (change)="selectYear(selezionaAnno.value)" #selezionaAnno>
+                    <option selected>Seleziona Anno</option>
+                    <option *ngFor="let anno of anni; let i = index" [value]="i">{{anno.inizio.slice(0, 4)}}/{{anno.fine.slice(0, 4)}}</option>
+                </select>
+                <button *ngIf="annoSelezionato != null" type="button" class="btn btn-success" (click)="openAnno(content, annoSelezionato)" >Modifica</button>
+            </div>
         </div>
         <div>
             <button type="button" class="btn btn-success" (click)="openAnno(content)">Aggiungi Anno Scolastico</button>
@@ -351,27 +402,30 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of classi; let i = index">
-                <th scope="row">{{ item.id }}</th>
-                <td>{{ item.nome }}</td>
-                <td>{{ item.indirizzo.nome }}</td>
-                <!-- <td class="d-none d-md-table-cell"></td> -->
-                <td>
-                    <!-- <button
-                        class="btn btn-primary"
-                        type="button"
-                        (click)="open(content, i)"
-                    >
-                        Visualizza
-                    </button> -->
-                    <button
-                        class="btn btn-primary"
-                        type="button"
-                    >
-                        Visualizza
-                    </button>
-                </td>
-            </tr>
+            <ng-container *ngIf="annoSelezionato != null">
+                <tr *ngFor="let item of filteredClassi; let i = index">
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.indirizzo.nome }}</td>
+                    <!-- <td class="d-none d-md-table-cell"></td> -->
+                    <td>
+                        <!-- <button
+                            class="btn btn-primary"
+                            type="button"
+                            (click)="open(content, i)"
+                        >
+                            Visualizza
+                        </button> -->
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            (click)="openClasse(content2, i);"
+                        >
+                            Visualizza
+                        </button>
+                    </td>
+                </tr>
+            </ng-container>
         </tbody>
     </table>
 </div>

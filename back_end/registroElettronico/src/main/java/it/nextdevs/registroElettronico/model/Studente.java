@@ -1,13 +1,12 @@
 package it.nextdevs.registroElettronico.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -21,4 +20,10 @@ public class Studente extends Utente {
     @ManyToOne
     @JoinColumn(name = "indirizzo_id")
     private Indirizzo indirizzo;
+    @ManyToMany(mappedBy = "studenti")
+    @JsonIgnore
+    private List<AnnoScolastico> anniScolastici;
+    @ManyToMany(mappedBy = "studenti")
+    @JsonIgnore
+    private List<Classe> classi;
 }

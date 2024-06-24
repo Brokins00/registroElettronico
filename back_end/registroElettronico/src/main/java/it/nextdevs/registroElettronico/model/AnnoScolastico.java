@@ -25,4 +25,12 @@ public class AnnoScolastico {
 
     @OneToMany(mappedBy = "annoScolastico")
     private List<Classe> classi;
+
+    @ManyToMany
+    @JoinTable(
+            name = "studenti_anni",
+            joinColumns = @JoinColumn(name="studente_id"),
+            inverseJoinColumns = @JoinColumn(name="annoScolastico_id")
+    )
+    private List<Studente> studenti;
 }
