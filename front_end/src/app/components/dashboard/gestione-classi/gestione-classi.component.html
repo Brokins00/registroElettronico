@@ -331,6 +331,14 @@
         <button
             type="button"
             class="btn btn-danger"
+            *ngIf="inEditClasse"
+            (click)="deleteClasse(registraClasse); classe.close('Save click')"
+        >
+            Elimina
+        </button>
+        <button
+            type="button"
+            class="btn btn-secondary"
             (click)="classe.close('Annulla click')"
         >
             Annulla

@@ -106,4 +106,14 @@ public class ClasseService {
             throw new BadRequestException("Classe non trovata");
         }
     }
+
+    public void deleteClasse(Integer id) throws BadRequestException {
+        Optional<Classe> classeOptional = classeRepository.findById(id);
+
+        if (classeOptional.isPresent()) {
+            classeRepository.delete(classeOptional.get());
+        } else {
+            throw new BadRequestException("Classe non trovata");
+        }
+    }
 }

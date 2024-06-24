@@ -80,6 +80,12 @@ export class ClassiService {
     )
   }
 
+  deleteClasse(data: number) {
+    this.http.delete(`${this.generalApi}/classi/${data}`).subscribe(() => {
+      this.reload();
+    })
+  }
+
   updateClasse(data: {
     nome: string|undefined,
     indirizzo: number,
@@ -107,17 +113,11 @@ export class ClassiService {
               }
             })
           }
-          console.log('suca', nuoviStudenti)
-          if (data3.id && nuoviStudenti.length > 0) this.patchClasseStudenti(nuoviStudenti, data3.id).subscribe();
-          this.getAllClassi().subscribe((data2: Classe[]) => {
-            this.classeSub.next(data2);
-          });
-          this.getAllIndirizzi().subscribe((data2: IndirizzoScolastico[]) => {
-            this.indirizziSub.next(data2);
-          });
-          this.getAllStudenti().subscribe((data2: Studente[]) => {
-            this.studenteSub.next(data2);
-          })
+          if (data3.id && nuoviStudenti.length > 0) {
+            this.patchClasseStudenti(nuoviStudenti, data3.id).subscribe(() => {
+              this.reload();
+            });
+          }
         }
       })
     )
@@ -154,16 +154,29 @@ export class ClassiService {
               }
             })
           }
-          if (data3.id && nuoviStudenti.length > 0) this.patchAnnoStudenti(nuoviStudenti, data3.id).subscribe();
-          this.getAllAnni().subscribe((data2: AnnoScolastico[]) => {
-            this.anniSub.next(data2);
-          });
-          this.getAllStudenti().subscribe((data2: Studente[]) => {
-            this.studenteSub.next(data2);
-          })
+          if (data3.id && nuoviStudenti.length > 0) {
+            this.patchAnnoStudenti(nuoviStudenti, data3.id).subscribe(() => {
+              this.reload();
+            });
+          }
         }
       })
     )
+  }
+
+  reload() {
+    this.getAllClassi().subscribe((data2: Classe[]) => {
+      this.classeSub.next(data2);
+    });
+    this.getAllIndirizzi().subscribe((data2: IndirizzoScolastico[]) => {
+      this.indirizziSub.next(data2);
+    });
+    this.getAllStudenti().subscribe((data2: Studente[]) => {
+      this.studenteSub.next(data2);
+    })
+    this.getAllAnni().subscribe((data2: AnnoScolastico[]) => {
+      this.anniSub.next(data2);
+    });
   }
 
   patchAnnoStudenti(studenti: number[], id: number) {

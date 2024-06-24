@@ -29,8 +29,8 @@ public class AnnoScolastico {
     @ManyToMany
     @JoinTable(
             name = "studenti_anni",
-            joinColumns = @JoinColumn(name="studente_id"),
-            inverseJoinColumns = @JoinColumn(name="annoScolastico_id")
+            joinColumns = @JoinColumn(name="annoScolastico_id"),
+            inverseJoinColumns = @JoinColumn(name="studente_id")
     )
     private List<Studente> studenti;
 }

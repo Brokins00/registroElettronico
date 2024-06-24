@@ -14,8 +14,6 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private authSrv: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log('test')
-    // return next.handle(request);
     return this.authSrv.user$.pipe(
       take(1),
       switchMap(user => {
@@ -23,10 +21,8 @@ export class TokenInterceptor implements HttpInterceptor {
           const newReq = request.clone({
             headers: request.headers.append('Authorization', `Bearer ${user.accessToken}`).append('Access-Control-Allow-Origin', '*')
           })
-          console.log(1);
           return next.handle(newReq);
         } else {
-          console.log(2)
           request.headers.append('Access-Control-Allow-Origin', '*')
           return next.handle(request)
         }

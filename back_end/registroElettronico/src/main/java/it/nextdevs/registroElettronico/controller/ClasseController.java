@@ -51,4 +51,10 @@ public class ClasseController {
     public Classe patchAnnoStudente(@PathVariable Integer id, @RequestBody PatchAnnoStudenteDto patchAnnoStudenteDto) throws BadRequestException {
         return classeService.patchClasseStudente(id, patchAnnoStudenteDto);
     }
+
+    @DeleteMapping("/classi/{id}")
+    @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
+    public void deleteClasse(@PathVariable Integer id) throws BadRequestException {
+        classeService.deleteClasse(id);
+    }
 }
