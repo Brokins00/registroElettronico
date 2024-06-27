@@ -33,4 +33,12 @@ public class AnnoScolastico {
             inverseJoinColumns = @JoinColumn(name="studente_id")
     )
     private List<Studente> studenti;
+
+    @ManyToMany
+    @JoinTable(
+            name = "docenti_anni",
+            joinColumns = @JoinColumn(name="annoScolastico_id"),
+            inverseJoinColumns = @JoinColumn(name="docente_id")
+    )
+    private List<Docente> docenti;
 }

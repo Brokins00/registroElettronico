@@ -201,14 +201,36 @@
             </div>
             <div *ngIf="inEditAnno">
                 <hr>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mb-2">
                     <h3>Studenti: {{model.studenti?.length}}</h3>
-                    <select class="form-select" id="studenti" name="studenti" (change)="addStudenteToAnno(studenteAnno.value); studenteAnno.selectedIndex = 0" #studenteAnno>
+                    <select class="form-select w-50" id="studenti" name="studenti" (change)="addStudenteToAnno(studenteAnno.value); studenteAnno.selectedIndex = 0" #studenteAnno>
                         <option selected [value]="null">Seleziona Studente</option>
                         <option *ngFor="let studente of filteredStudenti; let i = index" [value]="studente.id">{{studente.nome}} {{studente.cognome}} - {{studente.dataDiNascita}}</option>
                     </select>
                 </div>
                 <div class="row" *ngFor="let item of model.studenti">
+                    <div class="col-3">
+                        {{item.id}}
+                    </div>
+                    <div class="col-3">
+                        {{item.nome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.cognome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.dataDiNascita}}
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <h3>Docenti: {{model.docenti?.length}}</h3>
+                    <select class="form-select w-50" id="docenti" name="docenti" (change)="addDocenteToAnno(docenteAnno.value); docenteAnno.selectedIndex = 0" #docenteAnno>
+                        <option selected [value]="null">Seleziona Docente</option>
+                        <option *ngFor="let docente of filteredDocenti; let i = index" [value]="docente.id">{{docente.nome}} {{docente.cognome}} - {{docente.dataDiNascita}}</option>
+                    </select>
+                </div>
+                <div class="row" *ngFor="let item of model.docenti">
                     <div class="col-3">
                         {{item.id}}
                     </div>
@@ -287,9 +309,9 @@
             </div>
             <div *ngIf="inEditClasse">
                 <hr>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between mb-2">
                     <h3>Studenti: {{model2.studenti.length}}</h3>
-                    <select class="form-select" id="studenti" name="studenti" (change)="addStudenteToClasse(studenteClasse.value); studenteClasse.selectedIndex = 0" #studenteClasse>
+                    <select class="form-select w-50" id="studenti" name="studenti" (change)="addStudenteToClasse(studenteClasse.value); studenteClasse.selectedIndex = 0" #studenteClasse>
                         <option selected [value]="null">Seleziona Studente</option>
                         <option *ngFor="let studente of filteredStudenti2; let i = index" [value]="i">{{studente.nome}} {{studente.cognome}} - {{studente.dataDiNascita}}</option>
                     </select>

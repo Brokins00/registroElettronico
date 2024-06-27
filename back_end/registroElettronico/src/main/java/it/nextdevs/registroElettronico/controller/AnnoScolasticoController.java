@@ -2,6 +2,7 @@ package it.nextdevs.registroElettronico.controller;
 
 import it.nextdevs.registroElettronico.dto.AnnoScolasticoDto;
 import it.nextdevs.registroElettronico.dto.DocenteIndirizzoDto;
+import it.nextdevs.registroElettronico.dto.PatchAnnoDocenteDto;
 import it.nextdevs.registroElettronico.dto.PatchAnnoStudenteDto;
 import it.nextdevs.registroElettronico.exception.NonAutorizzatoException;
 import it.nextdevs.registroElettronico.model.AnnoScolastico;
@@ -52,5 +53,11 @@ public class AnnoScolasticoController {
     @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
     public AnnoScolastico patchAnnoStudente(@PathVariable Integer id, @RequestBody PatchAnnoStudenteDto patchAnnoStudenteDto) throws BadRequestException {
         return annoScolasticoService.patchAnnoStudente(id, patchAnnoStudenteDto);
+    }
+
+    @PatchMapping("/anni-scolastici/{id}/docenti")
+    @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
+    public AnnoScolastico patchAnnoDocente(@PathVariable Integer id, @RequestBody PatchAnnoDocenteDto patchAnnoDocenteDto) throws BadRequestException {
+        return annoScolasticoService.patchAnnoDocente(id, patchAnnoDocenteDto);
     }
 }

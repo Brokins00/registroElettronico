@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AnnoScolastico } from 'src/app/interface/anno-scolastico.interface';
 import { Classe } from 'src/app/interface/classe.interface';
+import { Docente } from 'src/app/interface/docente.interface';
 import { IndirizzoScolastico } from 'src/app/interface/indirizzo-scolastico.interface';
 import { Studente } from 'src/app/interface/studente.interface';
 import { User } from 'src/app/interface/user.interface';
@@ -21,8 +22,10 @@ export class GestioneClassiComponent implements OnInit {
   classi: Classe[] | null = null;
   filteredClassi: Classe[] = [];
   studenti: Studente[] | null = null;
+  docenti: Docente[] | null = null;
   filteredStudenti: Studente[] | null = null;
   filteredStudenti2: Studente[] | null = null;
+  filteredDocenti: Docente[] | null = null;
   user: User | undefined;
   annoSelezionato: number | null = null;
   classeSelezionata: number | null = null;
@@ -34,7 +37,8 @@ export class GestioneClassiComponent implements OnInit {
       fine?: string,
       codiceIstituto?: string,
       festivita: {inizio: string, fine: string, descrizione: string}[],
-      studenti?: Studente[]
+      studenti?: Studente[],
+      docenti?: Docente[]
     } = {
       festivita: []
     }
@@ -79,6 +83,11 @@ export class GestioneClassiComponent implements OnInit {
           this.studenti = studenti;
           this.filteredStudenti = [];
           
+        })
+
+        this.classeSrv.docenti$.subscribe((docenti) => {
+          this.docenti = docenti;
+          this.filteredDocenti = [];
         })
       }
       
@@ -258,13 +267,45 @@ export class GestioneClassiComponent implements OnInit {
       }
     }
 
+    addDocenteToAnno(id: string) {
+      let idNumero = Number(id);
+      let found = false;
+      this.docenti?.forEach((docente, index) => {
+        if (found) return;
+        if (docente.id == idNumero) {
+          found = true;
+          idNumero = index
+        }
+      })
+      if (!isNaN(idNumero) && this.docenti && this.docenti[idNumero]) {
+        console.log('arrivato', this.model.docenti)
+        this.model.docenti?.push(this.docenti[idNumero])
+        this.filteredDocenti = []
+        this.docenti.forEach((docente2) => {
+          if (this.anni && this.model.docenti !== null) {
+            let found2 = false;
+            this.model.docenti?.forEach((docente) => {
+              if (docente.id == docente2.id) {
+                found2 = true
+              }
+            })
+            if (!found2) {
+              this.filteredDocenti?.push(docente2);
+            }
+          }
+        })
+      }
+    }
+
     openAnno(content: TemplateRef<any>, index?:number) {
       if (index !== undefined && this.anni) {
         this.model.festivita = this.anni[index].festivita;
         this.model.inizio = this.anni[index].inizio;
         this.model.fine = this.anni[index].fine;
         this.model.studenti = [...this.anni[index].studenti];
+        this.model.docenti = [...this.anni[index].docenti]
         this.filteredStudenti = []
+        this.filteredDocenti = []
         this.studenti?.forEach((studente2) => {
           if (this.anni && this.model.studenti !== null) {
             let found = false;
@@ -273,22 +314,21 @@ export class GestioneClassiComponent implements OnInit {
                 found = true
               }
             })
-            // if (this.anni) {
-            //   let found2 = false
-            //   this.anni.forEach((anno) => {
-            //     let studentiAnno = anno.studenti;
-            //     studentiAnno.forEach((studenteAnno) => {
-            //       if (studenteAnno.id == studente2.id) {
-            //         found2 = true
-            //       }
-            //     })
-            //   })
-            //   if (found2) {
-            //     return
-            //   }
-            // }
             if (!found) {
               this.filteredStudenti?.push(studente2)
+            }
+          }
+        })
+        this.docenti?.forEach((docente2) => {
+          if (this.anni && this.model.docenti !== null) {
+            let found = false;
+            this.model.docenti?.forEach((docente) => {
+              if (docente.id == docente2.id) {
+                found = true
+              }
+            })
+            if (!found) {
+              this.filteredDocenti?.push(docente2)
             }
           }
         })

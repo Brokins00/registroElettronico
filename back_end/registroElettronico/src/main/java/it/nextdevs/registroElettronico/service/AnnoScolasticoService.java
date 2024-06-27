@@ -1,11 +1,14 @@
 package it.nextdevs.registroElettronico.service;
 
 import it.nextdevs.registroElettronico.dto.AnnoScolasticoDto;
+import it.nextdevs.registroElettronico.dto.PatchAnnoDocenteDto;
 import it.nextdevs.registroElettronico.dto.PatchAnnoStudenteDto;
 import it.nextdevs.registroElettronico.model.AnnoScolastico;
+import it.nextdevs.registroElettronico.model.Docente;
 import it.nextdevs.registroElettronico.model.Istituto;
 import it.nextdevs.registroElettronico.model.Studente;
 import it.nextdevs.registroElettronico.repository.AnnoScolasticoRepository;
+import it.nextdevs.registroElettronico.repository.DocenteRepository;
 import it.nextdevs.registroElettronico.repository.IstitutoRepository;
 import it.nextdevs.registroElettronico.repository.StudenteRepository;
 import org.apache.coyote.BadRequestException;
@@ -23,6 +26,8 @@ public class AnnoScolasticoService {
     private IstitutoRepository istitutoRepository;
     @Autowired
     private StudenteRepository studenteRepository;
+    @Autowired
+    private DocenteRepository docenteRepository;
 
     public List<AnnoScolastico> getAllAnni() {
         return annoScolasticoRepository.findAll();
@@ -69,6 +74,23 @@ public class AnnoScolasticoService {
                 studenteOptional.ifPresent(studenti::add);
             });
             annoScolastico.setStudenti(studenti);
+            return annoScolasticoRepository.save(annoScolastico);
+        } else {
+            throw new BadRequestException("L'anno scolastico indicato non esiste");
+        }
+    }
+
+    public AnnoScolastico patchAnnoDocente(Integer idAnno, PatchAnnoDocenteDto patchAnnoDocenteDto) throws BadRequestException{
+        Optional<AnnoScolastico> annoScolasticoOptional = getAnnoById(idAnno);
+
+        if (annoScolasticoOptional.isPresent()) {
+            AnnoScolastico annoScolastico = annoScolasticoOptional.get();
+            List<Docente> docenti = annoScolastico.getDocenti();
+            patchAnnoDocenteDto.getDocenti().forEach((docenteId) -> {
+                Optional<Docente> docenteOptional = docenteRepository.findById(docenteId);
+                docenteOptional.ifPresent(docenti::add);
+            });
+            annoScolastico.setDocenti(docenti);
             return annoScolasticoRepository.save(annoScolastico);
         } else {
             throw new BadRequestException("L'anno scolastico indicato non esiste");

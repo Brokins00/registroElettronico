@@ -10,6 +10,7 @@ import { Indirizzo } from '../interface/indirizzo.interface';
 import { IndirizzoScolastico } from '../interface/indirizzo-scolastico.interface';
 import { Classe } from '../interface/classe.interface';
 import { Studente } from '../interface/studente.interface';
+import { Docente } from '../interface/docente.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,8 @@ export class ClassiService {
   classi$=this.classeSub.asObservable();
   private studenteSub = new BehaviorSubject<Studente[] | null>(null)
   studenti$ = this.studenteSub.asObservable();
+  private docentiSub = new BehaviorSubject<Docente[] | null>(null)
+  docenti$ = this.docentiSub.asObservable();
   constructor(private http: HttpClient, private router:Router, private authSrv: AuthService) {
     this.authSrv.user$.subscribe(data => {
       if (data == null) {
@@ -42,6 +45,9 @@ export class ClassiService {
     this.getAllStudenti().subscribe((data2: Studente[]) => {
       this.studenteSub.next(data2);
     })
+    this.getAllDocenti().subscribe((data2: Docente[]) => {
+      this.docentiSub.next(data2);
+    })
   }
 
   private getAllIndirizzi() {
@@ -58,6 +64,10 @@ export class ClassiService {
 
   private getAllStudenti() {
     return this.http.get<Studente[]>(`${this.generalApi}/studenti`)
+  }
+
+  private getAllDocenti() {
+    return this.http.get<Docente[]>(`${this.generalApi}/docenti`)
   }
 
   saveAnno(data: {
@@ -127,7 +137,8 @@ export class ClassiService {
     inizio?: string,
     fine?: string,
     festivita?: Festivita[],
-    studenti?: Studente[]
+    studenti?: Studente[],
+    docenti?: Docente[]
   }, id: number|undefined) {
     return this.http.put<AnnoScolastico>(`${this.generalApi}/anni-scolastici/${id}`, data).pipe(
       tap(data3 => {
@@ -154,10 +165,32 @@ export class ClassiService {
               }
             })
           }
+          let nuoviDocenti: number[] = []
+          if (data.docenti) {
+            data.docenti.forEach((docente) => {
+              let found = false;
+              data3.docenti.forEach(docente2 => {
+                if (docente2.id == docente.id) {
+                  found = true
+                }
+              })
+              if (!found) {
+                if (docente.id) {
+                  nuoviDocenti.push(docente.id)
+                }
+              }
+            })
+          }
           if (data3.id && nuoviStudenti.length > 0) {
             this.patchAnnoStudenti(nuoviStudenti, data3.id).subscribe(() => {
               this.reload();
             });
+          }
+
+          if (data3.id && nuoviDocenti.length > 0) {
+            this.patchAnnoDocenti(nuoviDocenti, data3.id).subscribe(() => {
+              this.reload();
+            })
           }
         }
       })
@@ -177,10 +210,17 @@ export class ClassiService {
     this.getAllAnni().subscribe((data2: AnnoScolastico[]) => {
       this.anniSub.next(data2);
     });
+    this.getAllDocenti().subscribe((data2: Docente[]) => {
+      this.docentiSub.next(data2);
+    })
   }
 
   patchAnnoStudenti(studenti: number[], id: number) {
     return this.http.patch<AnnoScolastico>(`${this.generalApi}/anni-scolastici/${id}/studenti`, {studenti: studenti})
+  }
+
+  patchAnnoDocenti(docenti: number[], id: number) {
+    return this.http.patch<AnnoScolastico>(`${this.generalApi}/anni-scolastici/${id}/docenti`, {docenti: docenti})
   }
 
   patchClasseStudenti(studenti: number[], id: number) {

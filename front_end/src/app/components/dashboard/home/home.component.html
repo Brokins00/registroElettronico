@@ -1,3 +1,37 @@
 <div class="container">
-    <h1 class="text-center">DASHBOARD</h1>
+    <h1 class="text-center mb-5">DASHBOARD</h1>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-3 mb-4" *ngIf="studenti != null">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                  <h5 class="card-title">STUDENTI</h5>
+                  <p class="card-text">{{studenti.length}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 mb-4" *ngIf="docenti != null">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                  <h5 class="card-title">DOCENTI</h5>
+                  <p class="card-text">{{docenti.length}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 mb-4" *ngIf="anni != null">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                  <h5 class="card-title">ANNI SCOLASTICI</h5>
+                  <p class="card-text">{{anni.length}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 mb-4" *ngIf="classi != null">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                  <h5 class="card-title">CLASSI</h5>
+                  <p class="card-text">{{classi.length}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

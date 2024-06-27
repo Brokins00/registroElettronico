@@ -1,4 +1,5 @@
 import { Classe } from "./classe.interface";
+import { Docente } from "./docente.interface";
 import { Festivita } from "./festivita.interface";
 import { Studente } from "./studente.interface";
 
@@ -8,5 +9,6 @@ export interface AnnoScolastico {
     fine: string,
     festivita: Festivita[],
     classi: Classe[],
-    studenti: Studente[]
+    studenti: Studente[],
+    docenti: Docente[]
 }

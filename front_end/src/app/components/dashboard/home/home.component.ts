@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AnnoScolastico } from 'src/app/interface/anno-scolastico.interface';
+import { Classe } from 'src/app/interface/classe.interface';
+import { Docente } from 'src/app/interface/docente.interface';
+import { Studente } from 'src/app/interface/studente.interface';
 import { User } from 'src/app/interface/user.interface';
 import { AuthService } from 'src/app/service/auth.service';
+import { ClassiService } from 'src/app/service/classi.service';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +15,28 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class HomeComponent {
   user!: User | undefined;
-  constructor(private router: Router, private authSrv: AuthService) {
+  docenti: Docente[] | null = null;
+  studenti: Studente[] | null = null;
+  classi: Classe[] | null = null;
+  anni: AnnoScolastico[] | null = null;
+  constructor(private router: Router, private authSrv: AuthService, private classeSrv: ClassiService) {
     
   }
   ngOnInit(): void {
     this.authSrv.user$.subscribe(data => {
       this.user = data?.user;
+    })
+    this.classeSrv.docenti$.subscribe((docenti) => {
+      this.docenti = docenti;
+    })
+    this.classeSrv.studenti$.subscribe((studenti) => {
+      this.studenti = studenti;
+    })
+    this.classeSrv.classi$.subscribe((classi) => {
+      this.classi = classi;
+    })
+    this.classeSrv.anni$.subscribe((anni) => {
+      this.anni = anni;
     })
   }
 }
