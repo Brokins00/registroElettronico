@@ -22,4 +22,12 @@ public class IndirizzoScuola {
     @OneToMany(mappedBy = "indirizzo")
     @JsonIgnore
     private List<Classe> classi;
+
+    @ManyToMany
+    @JoinTable(
+            name= "materie_indirizzi",
+            joinColumns = @JoinColumn(name="indirizzo_id"),
+            inverseJoinColumns = @JoinColumn(name="materia_id")
+    )
+    private List<Materia> materie;
 }

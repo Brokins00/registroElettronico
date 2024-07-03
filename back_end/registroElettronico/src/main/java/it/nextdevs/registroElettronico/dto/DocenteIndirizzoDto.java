@@ -46,7 +46,7 @@ public class DocenteIndirizzoDto {
         this.citta = citta;
         this.provincia = provincia;
         this.cap = cap;
-        this.ruoloUtente = RuoloUtente.UTENTE;
+        this.ruoloUtente = RuoloUtente.DOCENTE;
         this.codiceIstituto = codiceIstituto;
     }
 }

@@ -1,10 +1,10 @@
 <ng-template #content let-docente>
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Crea Docente</h4>
+		<h4 class="modal-title" id="modal-basic-title">{{!inEdit ? 'Crea Docente': 'Modifica Docente'}}</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="docente.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
-		<form #registraStudente="ngForm">
+		<form #registraDocente="ngForm">
 			<div class="row g-3">
         <div class="col-12 col-md-6">
           <div class="form-floating mb-3">
@@ -85,8 +85,8 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-success" *ngIf="!inEdit" (click)="onSubmit(registraStudente);docente.close('Save click')">Salva</button>
-		<button type="button" class="btn btn-success" *ngIf="inEdit" (click)="update(registraStudente);docente.close('Save click')">Aggiorna</button>
+		<button type="button" class="btn btn-success" *ngIf="!inEdit" (click)="onSubmit(registraDocente);docente.close('Save click')">Salva</button>
+		<button type="button" class="btn btn-success" *ngIf="inEdit" (click)="update(registraDocente);docente.close('Save click')">Aggiorna</button>
 		<button type="button" class="btn btn-danger" (click)="docente.close('Annulla click')">Annulla</button>
 	</div>
 </ng-template>
@@ -123,7 +123,7 @@
             <td>{{item.nome}}</td>
             <td>{{item.cognome}}</td>
             <td class="d-none d-md-table-cell">DI RUOLO</td>
-            <td><button class="btn btn-primary" type="button" (click)="open(content, i)">Visualizza</button></td>
+            <td><button class="btn btn-success" type="button" (click)="open(content, i)">Visualizza</button></td>
           </tr>
         </tbody>
       </table>

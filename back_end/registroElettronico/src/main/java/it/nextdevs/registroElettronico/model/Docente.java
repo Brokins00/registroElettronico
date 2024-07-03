@@ -23,4 +23,7 @@ public class Docente extends Utente {
     @ManyToMany(mappedBy = "docenti")
     @JsonIgnore
     private List<AnnoScolastico> anniScolastici;
+    @OneToMany(mappedBy = "docente")
+    @JsonIgnore
+    private List<Valutazione> valutazioni;
 }

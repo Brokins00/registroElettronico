@@ -19,7 +19,7 @@ public class StudenteController {
     private StudenteService studenteService;
 
     @GetMapping("/studenti")
-    @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
+    @PreAuthorize("hasAnyAuthority('SEGRETERIA', 'DOCENTE')")
     public List<Studente> getAllStudenti() {
         return studenteService.getAllStudenti();
     }

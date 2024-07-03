@@ -11,13 +11,16 @@ import { TokenInterceptor } from './interceptor/token.interceptor';
 
 import { registerLocaleData } from '@angular/common';
 import localeIt from '@angular/common/locales/it';
+import { CapitalizePipe } from './pipe/capitalize.pipe';
+import { Pagina404Component } from './components/pagina404/pagina404.component';
 
 registerLocaleData(localeIt, 'it')
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    Pagina404Component
   ],
   imports: [
     BrowserModule,

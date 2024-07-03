@@ -1,5 +1,5 @@
 package it.nextdevs.registroElettronico.enums;
 
 public enum RuoloUtente {
-    UTENTE, SEGRETERIA, ADMIN
+    UTENTE, DOCENTE, SEGRETERIA, ADMIN
 }

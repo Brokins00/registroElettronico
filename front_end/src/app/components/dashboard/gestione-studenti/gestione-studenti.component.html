@@ -1,6 +1,6 @@
 <ng-template #content let-studente>
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Crea Studente</h4>
+		<h4 class="modal-title" id="modal-basic-title">{{!inEdit ? 'Crea Studente': 'Modifica Studente'}}</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="studente.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
@@ -125,7 +125,7 @@
             <td>{{item.cognome}}</td>
             <td class="d-none d-md-table-cell">3^D</td>
             <td class="d-none d-md-table-cell">FREQUENTANTE</td>
-            <td><button class="btn btn-primary" type="button" (click)="open(content, i)">Visualizza</button></td>
+            <td><button class="btn btn-success" type="button" (click)="open(content, i)">Visualizza</button></td>
           </tr>
           <!-- <tr>
             <th scope="row">2</th>

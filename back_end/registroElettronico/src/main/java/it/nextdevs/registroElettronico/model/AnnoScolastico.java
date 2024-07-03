@@ -1,5 +1,7 @@
 package it.nextdevs.registroElettronico.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +26,7 @@ public class AnnoScolastico {
     private Istituto istituto;
 
     @OneToMany(mappedBy = "annoScolastico")
+    @JsonManagedReference
     private List<Classe> classi;
 
     @ManyToMany
@@ -41,4 +44,8 @@ public class AnnoScolastico {
             inverseJoinColumns = @JoinColumn(name="docente_id")
     )
     private List<Docente> docenti;
+
+    @OneToMany(mappedBy = "annoScolastico")
+    @JsonManagedReference
+    private List<Valutazione> valutazioni;
 }

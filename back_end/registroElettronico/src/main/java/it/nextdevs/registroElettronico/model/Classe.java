@@ -1,5 +1,6 @@
 package it.nextdevs.registroElettronico.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class Classe {
 
     @ManyToOne
     @JoinColumn(name="anno_id")
-    @JsonIgnore
+    @JsonBackReference
     private AnnoScolastico annoScolastico;
 
     @ManyToMany

@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { GestioneDocentiComponent } from './gestione-docenti/gestione-docenti.component';
 import { GestioneClassiComponent } from './gestione-classi/gestione-classi.component';
+import { ValutazioniComponent } from './valutazioni/valutazioni.component';
+import { CapitalizePipe } from 'src/app/pipe/capitalize.pipe';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { GestioneClassiComponent } from './gestione-classi/gestione-classi.compo
     HomeComponent,
     NavbarComponent,
     GestioneDocentiComponent,
-    GestioneClassiComponent
+    GestioneClassiComponent,
+    ValutazioniComponent,
+    CapitalizePipe
   ],
   imports: [
     CommonModule,

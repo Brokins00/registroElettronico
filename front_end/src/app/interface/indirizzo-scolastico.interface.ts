@@ -1,4 +1,7 @@
+import { Materia } from "./materia.interface";
+
 export interface IndirizzoScolastico {
     id?: number,
-    nome: string
+    nome: string,
+    materie: Materia[]
 }

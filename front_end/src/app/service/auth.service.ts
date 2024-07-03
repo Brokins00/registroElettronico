@@ -25,7 +25,7 @@ export class AuthService {
       tap(async (data) => {
         this.authSub.next(data);
         localStorage.setItem('user', JSON.stringify(data))
-        this.router.navigate(["/dashboard"])
+        this.router.navigate(["/dashboard/home"])
       }),
       catchError(this.errors)
     )

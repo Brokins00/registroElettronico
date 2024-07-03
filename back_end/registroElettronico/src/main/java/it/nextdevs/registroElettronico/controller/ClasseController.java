@@ -22,7 +22,7 @@ public class ClasseController {
     private ClasseService classeService;
 
     @GetMapping("/classi")
-    @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
+    @PreAuthorize("hasAnyAuthority('SEGRETERIA', 'DOCENTE')")
     public List<Classe> getAllClassi() {
         return classeService.getAllClassi();
     }

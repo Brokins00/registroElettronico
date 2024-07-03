@@ -31,7 +31,7 @@ public class IndirizzoScuolaController {
     }
 
     @GetMapping("indirizzi-scolastici")
-    @PreAuthorize("hasAnyAuthority('SEGRETERIA')")
+    @PreAuthorize("hasAnyAuthority('SEGRETERIA', 'DOCENTE')")
     public List<IndirizzoScuola> getAllIndirizzi() {
         return indirizzoScuolaService.getAllIndirizzi();
     }

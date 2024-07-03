@@ -1,6 +1,7 @@
 package it.nextdevs.registroElettronico.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,4 +27,7 @@ public class Studente extends Utente {
     @ManyToMany(mappedBy = "studenti")
     @JsonIgnore
     private List<Classe> classi;
+    @OneToMany(mappedBy = "studente")
+    @JsonManagedReference
+    private List<Valutazione> valutazioni;
 }

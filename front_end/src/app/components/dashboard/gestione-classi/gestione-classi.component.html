@@ -1,6 +1,6 @@
 <ng-template #content3 let-festivita>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Crea Anno Scolastico</h4>
+        <h4 class="modal-title" id="modal-basic-title">Crea Festività</h4>
         <button
             type="button"
             class="btn-close"
@@ -83,7 +83,7 @@
 </ng-template>
 <ng-template #content4 let-indirizzo>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Crea Anno Scolastico</h4>
+        <h4 class="modal-title" id="modal-basic-title">Crea Indirizzo Scolastico</h4>
         <button
             type="button"
             class="btn-close"
@@ -222,7 +222,7 @@
                         {{item.dataDiNascita}}
                     </div>
                 </div>
-                <hr>
+                <!-- <hr>
                 <div class="d-flex justify-content-between mb-2">
                     <h3>Docenti: {{model.docenti?.length}}</h3>
                     <select class="form-select w-50" id="docenti" name="docenti" (change)="addDocenteToAnno(docenteAnno.value); docenteAnno.selectedIndex = 0" #docenteAnno>
@@ -243,7 +243,7 @@
                     <div class="col-3">
                         {{item.dataDiNascita}}
                     </div>
-                </div>
+                </div> -->
             </div>
         </form>
     </div>
@@ -447,7 +447,7 @@
                             Visualizza
                         </button> -->
                         <button
-                            class="btn btn-primary"
+                            class="btn btn-success"
                             type="button"
                             (click)="openClasse(content2, i);"
                         >

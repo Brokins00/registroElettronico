@@ -1,0 +1,201 @@
+<ng-template #content2 let-valutazione>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crea Valutazione</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="valutazione.dismiss('Cross click')"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <form #creazioneValutazione="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-floating mb-2">
+                        <input type="date" id="data" name="data" class="form-control" [(ngModel)]="model.data"/>
+                        <label for="data">Data</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating mb-2">
+                        <select name="materia" id="materia" class="form-select" [(ngModel)]="model.materiaId">
+                            <option selected value="-1">Seleziona Materia</option>
+                            <option *ngFor="let materia of materie" [value]="materia.id">{{materia.nome}}</option>
+                        </select>
+                        <label for="materia">Materia</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating mb-2">
+                        <select id="voto" name="voto" class="form-select" [(ngModel)]="model.voto">
+                            <option selected value="-1">Seleziona voto</option>
+                            <option value="0">0</option>
+                            <option value="0.25">0+</option>
+                            <option value="0.5">0 1/2</option>
+                            <option value="0.75">1-</option>
+                            <option value="1">1</option>
+                            <option value="1.25">1+</option>
+                            <option value="1.5">1 1/2</option>
+                            <option value="1.75">2-</option>
+                            <option value="2">2</option>
+                            <option value="2.25">2+</option>
+                            <option value="2.5">2 1/2</option>
+                            <option value="2.75">3-</option>
+                            <option value="3">3</option>
+                            <option value="3.25">3+</option>
+                            <option value="3.5">3 1/2</option>
+                            <option value="3.75">4-</option>
+                            <option value="4">4</option>
+                            <option value="4.25">4+</option>
+                            <option value="4.5">4 1/2</option>
+                            <option value="4.75">5-</option>
+                            <option value="5">5</option>
+                            <option value="5.25">5+</option>
+                            <option value="5.5">5 1/2</option>
+                            <option value="5.75">6-</option>
+                            <option value="6">6</option>
+                            <option value="6.25">6+</option>
+                            <option value="6.5">6 1/2</option>
+                            <option value="6.75">7-</option>
+                            <option value="7">7</option>
+                            <option value="7.25">7+</option>
+                            <option value="7.5">7 1/2</option>
+                            <option value="7.75">8-</option>
+                            <option value="8">8</option>
+                            <option value="8.25">8+</option>
+                            <option value="8.5">8 1/2</option>
+                            <option value="8.75">9-</option>
+                            <option value="9">9</option>
+                            <option value="9.25">9+</option>
+                            <option value="9.5">9 1/2</option>
+                            <option value="9.75">10-</option>
+                            <option value="10">10</option>
+                        </select>
+                        <label for="voto">Voto</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating mb-2">
+                        <select name="tipologia" id="tipologia" class="form-select" [(ngModel)]="model.tipologia">
+                            <option selected value="cortesia">Seleziona Tipologia</option>
+                            <option value="scritto">Scritto</option>
+                            <option value="orale">Orale</option>
+                            <option value="pratico">Pratico</option>
+                        </select>
+                        <label for="tipologia">Tipologia</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating">
+                <textarea name="descrizione" class="form-control" id="descrizione" style="resize: none; height: 10vh;" [(ngModel)]="model.descrizione"></textarea>
+                <label for="descrizione">Descrizione</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-success"
+            (click)="saveValutazione();valutazione.close('Chiudi click')"
+        >Inserisci</button>
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="valutazione.close('Chiudi click')"
+        >
+            Chiudi
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #content let-studente>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Valutazioni Studente</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="studente.dismiss('Cross click')"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <button type="button" class="btn btn-success mb-2" (click)="aggiungiValutazione(content2)">Aggiungi Valutazione</button>
+        <div class="row border-bottom border-black py-2">
+            <div class="col-7 col-lg-4 fs-md-6 fw-bold">Materia</div>
+            <div class="col-2 col-lg-1 fs-7 fs-md-6 fw-bold">Voto</div>
+            <div class="col-3 col-lg-2 fs-7 fs-md-6 fw-bold">Tipo</div>
+            <div class="col-5 fs-7 fs-md-6 fw-bold d-none d-lg-block">Descrizione</div>
+        </div>
+        <div class="row border-bottom border-black d-flex justify-content-center w-100" *ngIf="!valutazioni || valutazioni.length == 0">
+            <p class="text-center">Nessun Risultato</p>
+        </div>
+        <div class="row border-bottom border-black py-2" *ngFor="let valutazione of valutazioni">
+            <div class="col-7 col-lg-4 fs-7 fs-md-6">{{valutazione.materia.nome}} | Prof. {{valutazione.docente.cognome}}</div>
+            <div class="col-2 col-lg-1 fs-7 fs-md-6">{{valutazione.voto}}</div>
+            <div class="col-3 col-lg-2 fs-7 fs-md-6">{{valutazione.tipologia | capitalize}}</div>
+            <div class="col-5 fs-7 fs-md-6 d-none d-lg-block">{{valutazione.descrizione}}</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="studente.close('Chiudi click')"
+        >
+            Chiudi
+        </button>
+    </div>
+</ng-template>
+
+<div class="container">
+    <h1 class="text-center">Valutazioni</h1>
+    <hr />
+    <div class="d-flex justify-content-between mb-3">
+        <h3>Anno Scolastico </h3>
+        <select class="form-select me-2 w-50" (change)="selectYear(selezionaAnno.value)" #selezionaAnno>
+            <option selected>Seleziona Anno</option>
+            <option *ngFor="let anno of anni; let i = index" [value]="i">{{anno.inizio.slice(0, 4)}}/{{anno.fine.slice(0, 4)}}</option>
+        </select>
+    </div>
+    <ng-container *ngIf="annoSelezionato != null">
+        <hr>
+        <div class="d-flex justify-content-between mb-3">
+            <h3>Classe </h3>
+            <select class="form-select me-2 w-50" (change)="selectClasse(selezionaClasse.value)" #selezionaClasse>
+                <option selected>Seleziona Classe</option>
+                <option *ngFor="let classe of filteredClassi; let i = index" [value]="i">{{classe.nome}} | {{classe.indirizzo.nome}}</option>
+            </select>
+        </div>
+    </ng-container>
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Cognome</th>
+                <th scope="col" class="d-none d-md-table-cell">Data di Nascita</th>
+                <th scope="col">Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="classeSelezionata != null">
+                <tr *ngFor="let item of filteredStudenti; let i = index">
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.cognome }}</td>
+                    <td class="d-none d-md-table-cell">{{item.dataDiNascita}}</td>
+                    <td>
+                        <button
+                            class="btn btn-success"
+                            type="button"
+                            (click)="openStudente(content, i);"
+                        >
+                            Visualizza
+                        </button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

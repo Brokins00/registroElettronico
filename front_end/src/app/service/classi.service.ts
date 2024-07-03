@@ -11,6 +11,8 @@ import { IndirizzoScolastico } from '../interface/indirizzo-scolastico.interface
 import { Classe } from '../interface/classe.interface';
 import { Studente } from '../interface/studente.interface';
 import { Docente } from '../interface/docente.interface';
+import { Materia } from '../interface/materia.interface';
+import { Valutazione } from '../interface/valutazione.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +72,10 @@ export class ClassiService {
     return this.http.get<Docente[]>(`${this.generalApi}/docenti`)
   }
 
+  getValutazioniByStudenteAndAnno(studenteId: number, annoId: number) {
+    return this.http.get<Valutazione[]>(`${this.generalApi}/studenti/${studenteId}/anno/${annoId}`)
+  }
+
   saveAnno(data: {
     inizio?: string,
     fine?: string,
@@ -86,6 +92,14 @@ export class ClassiService {
         this.getAllAnni().subscribe((data2) => {
           this.anniSub.next(data2);
         });
+      })
+    )
+  }
+
+  saveValutazione(data: any) {
+    return this.http.post<number>(`${this.generalApi}/valutazioni`, data).pipe(
+      tap(data3 => {
+        this.reload();
       })
     )
   }
