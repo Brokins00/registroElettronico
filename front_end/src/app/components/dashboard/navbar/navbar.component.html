@@ -1,0 +1,107 @@
+<header>
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+        <div class="container">
+            <div
+                class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+            >
+                <a
+                    [routerLink]="user?.ruoloUtente == 'SEGRETERIA' ? ['/dashboard/home'] : ['/dashboard/valutazioni']"
+                    class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"
+                >
+                    <h1>RES</h1>
+                </a>
+
+                <ul
+                    class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
+                >
+                    <li *ngIf="user?.ruoloUtente == 'SEGRETERIA'">
+                        <a
+                            [routerLink]="['/dashboard/home']"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            class="nav-link text-secondary"
+                        >
+                            <i
+                                class="bi bi-house d-block mx-auto mb-1 text-center"
+                            ></i>
+                            Home
+                        </a>
+                    </li>
+                    <li *ngIf="user?.ruoloUtente == 'SEGRETERIA'">
+                        <a
+                            [routerLink]="['/dashboard/studenti']"
+                            routerLinkActive="active"
+                            class="nav-link text-white"
+                        >
+                            <i
+                                class="bi bi-people d-block mx-auto mb-1 text-center"
+                            ></i>
+                            Studenti
+                        </a>
+                    </li>
+                    <li *ngIf="user?.ruoloUtente == 'SEGRETERIA'">
+                        <a
+                            [routerLink]="['/dashboard/docenti']"
+                            routerLinkActive="active"
+                            class="nav-link text-white"
+                        >
+                            <i
+                                class="bi bi-people d-block mx-auto mb-1 text-center"
+                            ></i>
+                            Docenti
+                        </a>
+                    </li>
+                    <li *ngIf="user?.ruoloUtente == 'SEGRETERIA'">
+                        <a
+                            [routerLink]="['/dashboard/classi']"
+                            routerLinkActive="active"
+                            class="nav-link text-white"
+                        >
+                            <i
+                                class="bi bi-people d-block mx-auto mb-1 text-center"
+                            ></i>
+                            Classi
+                        </a>
+                    </li>
+                    <li *ngIf="user?.ruoloUtente == 'DOCENTE'">
+                        <a
+                            [routerLink]="['/dashboard/valutazioni']"
+                            routerLinkActive="active"
+                            class="nav-link text-white"
+                        >
+                            <i
+                                class="bi bi-people d-block mx-auto mb-1 text-center"
+                            ></i>
+                            Valutazioni
+                        </a>
+                    </li>
+                    <li
+                        class="dropdown d-flex justify-content-center align-content-center"
+                    >
+                        <a
+                            href="javascript:void(0)"
+                            class="d-block link-body-emphasis text-decoration-none dropdown-toggle align-content-center"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <img
+                                src="https://cdn2.iconfinder.com/data/icons/user-people-4/48/5-512.png"
+                                alt="mdo"
+                                width="32"
+                                height="32"
+                                class="rounded-circle"
+                            />
+                        </a>
+                        <ul class="dropdown-menu text-small shadow">
+                            <li>
+                                <a class="dropdown-item" (click)="logout()"
+                                    >Esci</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

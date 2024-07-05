@@ -1,0 +1,130 @@
+<ng-template #content let-docente>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">{{!inEdit ? 'Crea Docente': 'Modifica Docente'}}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="docente.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form #registraDocente="ngForm">
+			<div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nome" aria-label="Nome" name="nome" [(ngModel)]="model.nome" >
+            <label for="nome" class="form-label">Nome</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="cognome" aria-label="Cognome" name="cognome" [(ngModel)]="model.cognome">
+            <label for="cognome" class="form-label">Cognome</label>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="dataDiNascita" aria-label="Data di Nascita" name="dataDiNascita" [(ngModel)]="model.dataDiNascita" [max]="data">
+            <label for="dataDiNascita" class="form-label">Data Di Nascita</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" aria-label="Codice Fiscale" id="codiceFiscale" name="codiceFiscale" [(ngModel)]="model.codiceFiscale">
+            <label for="codiceFiscale" class="form-label">Codice Fiscale</label>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" aria-label="Email" name="email" [(ngModel)]="model.email">
+            <label for="email" class="form-label">Email</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="!inEdit">
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" aria-label="Password" name="password" [(ngModel)]="model.password">
+            <label for="password" class="form-label">Password</label>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="via" aria-label="Indirizzo" name="via" [(ngModel)]="model.via">
+            <label for="via" class="form-label">Indirizzo</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="numeroCivico" aria-label="Civico" name="numeroCivico" [(ngModel)]="model.numeroCivico">
+            <label for="numeroCivico" class="form-label">Civico</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="form-floating mb-3">
+            <input type="text" maxlength="5" class="form-control" id="cap" aria-label="CAP" name="cap" [(ngModel)]="model.cap">
+            <label for="cap" class="form-label">CAP</label>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="citta" aria-label="Città" name="citta" [(ngModel)]="model.citta">
+            <label for="citta" class="form-label">Città</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="provincia" aria-label="Provincia" name="provincia" [(ngModel)]="model.provincia">
+            <label for="provincia" class="form-label">Provincia</label>
+          </div>
+        </div>
+      </div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-success" *ngIf="!inEdit" (click)="onSubmit(registraDocente);docente.close('Save click')">Salva</button>
+		<button type="button" class="btn btn-success" *ngIf="inEdit" (click)="update(registraDocente);docente.close('Save click')">Aggiorna</button>
+		<button type="button" class="btn btn-danger" (click)="docente.close('Annulla click')">Annulla</button>
+	</div>
+</ng-template>
+
+<div class="container">
+    <h1 class="text-center">GESTIONE DOCENTI</h1>
+    <hr>
+    <div class="row">
+        <div class="col col-md-5 col-lg-3">
+            <!-- <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Cerca</button>
+              </form> -->
+        </div>
+        <div class="d-none d-md-block col-md-3 col-lg-6"></div>
+        <div class="col col-md-4 col-lg-3 d-flex justify-content-end">
+            <button class="btn btn-success" type="button" (click)="open(content)">AGGIUNGI DOCENTE</button>
+        </div>
+    </div>
+    <hr>
+    <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Cognome</th>
+            <th scope="col" class="d-none d-md-table-cell">Stato</th>
+            <th scope="col">Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of docenti; let i = index">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.nome}}</td>
+            <td>{{item.cognome}}</td>
+            <td class="d-none d-md-table-cell">DI RUOLO</td>
+            <td><button class="btn btn-success" type="button" (click)="open(content, i)">Visualizza</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>

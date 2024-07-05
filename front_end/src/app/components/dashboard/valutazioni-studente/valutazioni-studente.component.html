@@ -1,0 +1,33 @@
+<div class="container">
+    <h1 class="text-center">Valutazioni</h1>
+    <hr />
+    <div class="d-flex justify-content-between mb-3">
+        <h3>Anno Scolastico </h3>
+        <select class="form-select me-2 w-50" (change)="selectYear(selezionaAnno.value)" #selezionaAnno>
+            <option selected>Seleziona Anno</option>
+            <option *ngFor="let anno of anni; let i = index" [value]="i">{{anno.inizio.slice(0, 4)}}/{{anno.fine.slice(0, 4)}}</option>
+        </select>
+    </div>
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Materia</th>
+                <th scope="col">Prof</th>
+                <th scope="col" class="d-none d-md-table-cell">Data</th>
+                <th scope="col">Voto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="valutazioni != null">
+                <tr *ngFor="let item of valutazioni; let i = index">
+                    <td>{{ item.materia.nome }}</td>
+                    <td>Prof. {{ item.docente.cognome }}</td>
+                    <td class="d-none d-md-table-cell">{{item.data}}</td>
+                    <td>
+                        {{item.voto}}
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

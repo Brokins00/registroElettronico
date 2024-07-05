@@ -1,0 +1,461 @@
+<ng-template #content3 let-festivita>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crea Festività</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="festivita.dismiss('Cross click')"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <form #registraFestivita="ngForm">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input 
+                            type="text"
+                            class="form-control"
+                            id="descrizione"
+                            aria-label="Descrizione"
+                            name="descrizione"
+                            [(ngModel)]="model3.descrizione"
+                        />
+                        <label for="descrizione" class="form-label">Descrizione</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="inizio"
+                            aria-label="Inizio"
+                            name="inizio"
+                            [(ngModel)]="model3.inizio"
+                        />
+                        <label for="inizio" class="form-label">Inizio Festività</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="fine"
+                            aria-label="Fine"
+                            name="fine"
+                            [(ngModel)]="model3.fine"
+                        />
+                        <label for="fine" class="form-label">Fine Festività</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="!inEdit"
+            (click)="onSubmitFestivita(registraFestivita); festivita.close('Save click')"
+        >
+            Salva
+        </button>
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="inEdit"
+            (click)="updateFestivita(registraFestivita); festivita.close('Save click')"
+        >
+            Aggiorna
+        </button>
+        <button
+            type="button"
+            class="btn btn-danger"
+            (click)="festivita.close('Annulla click')"
+        >
+            Annulla
+        </button>
+    </div>
+</ng-template>
+<ng-template #content4 let-indirizzo>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crea Indirizzo Scolastico</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="indirizzo.dismiss('Cross click')"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <form #registraIndirizzo="ngForm">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input 
+                            type="text"
+                            class="form-control"
+                            id="nomeIndirizzo"
+                            aria-label="Nome Indirizzo"
+                            name="nomeIndirizzo"
+                            ngModel
+                        />
+                        <label for="descrizione" class="form-label">Nome Indirizzo</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="!inEdit"
+            (click)="onSubmitIndirizzo(registraIndirizzo); indirizzo.close('Save click')"
+        >
+            Salva
+        </button>
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="inEdit"
+            (click)="updateIndirizzo(registraIndirizzo); indirizzo.close('Save click')"
+        >
+            Aggiorna
+        </button>
+        <button
+            type="button"
+            class="btn btn-danger"
+            (click)="indirizzo.close('Annulla click')"
+        >
+            Annulla
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #content let-annoScolastico>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crea Anno Scolastico</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="annoScolastico.dismiss('Cross click')"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <form #registraAnnoScolastico="ngForm">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="inizio"
+                            aria-label="Inizio"
+                            name="inizio"
+                            [(ngModel)]="model.inizio"
+                        />
+                        <label for="inizio" class="form-label">Inizio Anno</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="fine"
+                            aria-label="Fine"
+                            name="fine"
+                            [(ngModel)]="model.fine"
+                        />
+                        <label for="fine" class="form-label">Fine Anno</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3>Festività</h3>
+            <div class="row g-3">
+                <button type="button" class="btn btn-success" (click)="openFestivita(content3)">Aggiungi Festività</button>
+            </div>
+            <div class="row g-3" *ngFor="let item of model.festivita; let i = index">
+                <div class="col-4">
+                    <h6>Descrizione</h6>
+                    <p>{{item.descrizione}}</p>
+                </div>
+                <div class="col-3">
+                    <h6>Inizio</h6>
+                    <p>{{item.inizio}}</p>
+                </div>
+                <div class="col-3">
+                    <h6>Fine</h6>
+                    <p>{{item.fine}}</p>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-danger" id="elimina" name="{{i}}" (click)="removeFestivita(i)"><i class="bi bi-trash text-white"></i></button>
+                </div>
+            </div>
+            <div *ngIf="inEditAnno">
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <h3>Studenti: {{model.studenti?.length}}</h3>
+                    <select class="form-select w-50" id="studenti" name="studenti" (change)="addStudenteToAnno(studenteAnno.value); studenteAnno.selectedIndex = 0" #studenteAnno>
+                        <option selected [value]="null">Seleziona Studente</option>
+                        <option *ngFor="let studente of filteredStudenti; let i = index" [value]="studente.id">{{studente.nome}} {{studente.cognome}} - {{studente.dataDiNascita}}</option>
+                    </select>
+                </div>
+                <div class="row" *ngFor="let item of model.studenti">
+                    <div class="col-3">
+                        {{item.id}}
+                    </div>
+                    <div class="col-3">
+                        {{item.nome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.cognome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.dataDiNascita}}
+                    </div>
+                </div>
+                <!-- <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <h3>Docenti: {{model.docenti?.length}}</h3>
+                    <select class="form-select w-50" id="docenti" name="docenti" (change)="addDocenteToAnno(docenteAnno.value); docenteAnno.selectedIndex = 0" #docenteAnno>
+                        <option selected [value]="null">Seleziona Docente</option>
+                        <option *ngFor="let docente of filteredDocenti; let i = index" [value]="docente.id">{{docente.nome}} {{docente.cognome}} - {{docente.dataDiNascita}}</option>
+                    </select>
+                </div>
+                <div class="row" *ngFor="let item of model.docenti">
+                    <div class="col-3">
+                        {{item.id}}
+                    </div>
+                    <div class="col-3">
+                        {{item.nome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.cognome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.dataDiNascita}}
+                    </div>
+                </div> -->
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="!inEditAnno"
+            (click)="onSubmitAnno(registraAnnoScolastico); annoScolastico.close('Save click')"
+        >
+            Salva
+        </button>
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="inEditAnno"
+            (click)="updateAnno(registraAnnoScolastico); annoScolastico.close('Save click')"
+        >
+            Aggiorna
+        </button>
+        <button
+            type="button"
+            class="btn btn-danger"
+            (click)="annoScolastico.close('Annulla click')"
+        >
+            Annulla
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #content2 let-classe>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{!inEditClasse ? "Crea Classe" : "Modifica Classe"}}</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="classe.dismiss('Cross click')"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <form #registraClasse="ngForm">
+            <div class="row g-3">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="nome"
+                            aria-label="Nome"
+                            name="nome"
+                            [(ngModel)]="model2.nome"
+                        />
+                        <label for="nome" class="form-label">Nome</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <select class="form-select" id="indirizzo" name="indirizzo" required [(ngModel)]="model2.indirizzo">
+                        <option selected>Seleziona Indirizzo</option>
+                        <option *ngFor="let indirizzo of indirizzi" [value]="indirizzo.id">{{indirizzo.nome}}</option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="inEditClasse">
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <h3>Studenti: {{model2.studenti.length}}</h3>
+                    <select class="form-select w-50" id="studenti" name="studenti" (change)="addStudenteToClasse(studenteClasse.value); studenteClasse.selectedIndex = 0" #studenteClasse>
+                        <option selected [value]="null">Seleziona Studente</option>
+                        <option *ngFor="let studente of filteredStudenti2; let i = index" [value]="i">{{studente.nome}} {{studente.cognome}} - {{studente.dataDiNascita}}</option>
+                    </select>
+                </div>
+                <div class="row" *ngFor="let item of model2.studenti">
+                    <div class="col-3">
+                        {{item.id}}
+                    </div>
+                    <div class="col-3">
+                        {{item.nome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.cognome}}
+                    </div>
+                    <div class="col-3">
+                        {{item.dataDiNascita}}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="!inEditClasse"
+            (click)="onSubmitClasse(registraClasse); classe.close('Save click')"
+        >
+            Salva
+        </button>
+        <button
+            type="button"
+            class="btn btn-success"
+            *ngIf="inEditClasse"
+            (click)="updateClasse(registraClasse); classe.close('Save click')"
+        >
+            Aggiorna
+        </button>
+        <button
+            type="button"
+            class="btn btn-danger"
+            *ngIf="inEditClasse"
+            (click)="deleteClasse(registraClasse); classe.close('Save click')"
+        >
+            Elimina
+        </button>
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="classe.close('Annulla click')"
+        >
+            Annulla
+        </button>
+    </div>
+</ng-template>
+
+<div class="container">
+    <h1 class="text-center">GESTIONE CLASSI</h1>
+    <hr />
+    <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex flex-column">
+            <h3>Anno Scolastico </h3>
+            <div class="d-flex">
+                <select class="form-select me-2" (change)="selectYear(selezionaAnno.value)" #selezionaAnno>
+                    <option selected>Seleziona Anno</option>
+                    <option *ngFor="let anno of anni; let i = index" [value]="i">{{anno.inizio.slice(0, 4)}}/{{anno.fine.slice(0, 4)}}</option>
+                </select>
+                <button *ngIf="annoSelezionato != null" type="button" class="btn btn-success" (click)="openAnno(content, annoSelezionato)" >Modifica</button>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-success" (click)="openAnno(content)">Aggiungi Anno Scolastico</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col col-md-5 col-lg-3">
+            <!-- <form class="d-flex">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    placeholder="Cerca"
+                    aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                    Cerca
+                </button>
+            </form> -->
+        </div>
+        <div class="d-none d-md-block col-md-1 col-lg-4"></div>
+        <div class="col col-md-6 col-lg-5 d-flex justify-content-end">
+            <button
+                class="btn btn-success me-2"
+                type="button"
+                (click)="openIndirizzo(content4)"
+            >
+                Aggiungi Indirizzo
+            </button>
+            <button
+                class="btn btn-success ms-2"
+                type="button"
+                [disabled]="annoSelezionato == null"
+                (click)="openClasse(content2)"
+            >
+                Aggiungi Classe
+            </button>
+        </div>
+    </div>
+    <hr />
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Indirizzo</th>
+                <!-- <th scope="col" class="d-none d-md-table-cell">Alunni</th> -->
+                <th scope="col">Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="annoSelezionato != null">
+                <tr *ngFor="let item of filteredClassi; let i = index">
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.indirizzo.nome }}</td>
+                    <!-- <td class="d-none d-md-table-cell"></td> -->
+                    <td>
+                        <!-- <button
+                            class="btn btn-primary"
+                            type="button"
+                            (click)="open(content, i)"
+                        >
+                            Visualizza
+                        </button> -->
+                        <button
+                            class="btn btn-success"
+                            type="button"
+                            (click)="openClasse(content2, i);"
+                        >
+                            Visualizza
+                        </button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
