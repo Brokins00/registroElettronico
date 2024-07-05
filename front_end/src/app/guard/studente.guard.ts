@@ -17,7 +17,7 @@ export class StudenteGuard implements CanActivate {
         if (user && user.user.ruoloUtente == 'UTENTE') {
           return true
         }
-        return this.router.createUrlTree(['/dashboard/home'])
+        return false
       })
     )
   }

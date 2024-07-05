@@ -23,7 +23,7 @@ public class AnnoScolasticoController {
     private AnnoScolasticoService annoScolasticoService;
 
     @GetMapping("/anni-scolastici")
-    @PreAuthorize("hasAnyAuthority('SEGRETERIA', 'DOCENTE')")
+    @PreAuthorize("hasAnyAuthority('SEGRETERIA', 'DOCENTE', 'UTENTE')")
     public List<AnnoScolastico> getAllAnni() {
         return annoScolasticoService.getAllAnni();
     }

@@ -9,17 +9,20 @@ import { GestioneClassiComponent } from './gestione-classi/gestione-classi.compo
 import { ValutazioniComponent } from './valutazioni/valutazioni.component';
 import { SegreteriaGuard } from 'src/app/guard/segreteria.guard';
 import { DocenteGuard } from 'src/app/guard/docente.guard';
+import { StudenteGuard } from 'src/app/guard/studente.guard';
+import { ValutazioniStudenteComponent } from './valutazioni-studente/valutazioni-studente.component';
 
 const routes: Routes = [
   { path: '',
     component: DashboardComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+      { path: 'home', component: HomeComponent, canActivate: [AuthGuard, SegreteriaGuard]},
       { path: 'studenti', component: GestioneStudentiComponent, canActivate: [AuthGuard, SegreteriaGuard]},
       { path: 'docenti', component: GestioneDocentiComponent, canActivate: [AuthGuard, SegreteriaGuard]},
       { path: 'classi', component: GestioneClassiComponent, canActivate: [AuthGuard, SegreteriaGuard]},
-      { path: 'valutazioni', component: ValutazioniComponent, canActivate: [AuthGuard, DocenteGuard]}
+      { path: 'valutazioni', component: ValutazioniComponent, canActivate: [AuthGuard, DocenteGuard]},
+      { path: 'valutazioni-studente', component: ValutazioniStudenteComponent, canActivate: [AuthGuard, StudenteGuard]}
     ]
   },
 ];

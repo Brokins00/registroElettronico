@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnnoScolastico } from 'src/app/interface/anno-scolastico.interface';
 import { Classe } from 'src/app/interface/classe.interface';
@@ -19,7 +19,7 @@ export class HomeComponent {
   studenti: Studente[] | null = null;
   classi: Classe[] | null = null;
   anni: AnnoScolastico[] | null = null;
-  constructor(private router: Router, private authSrv: AuthService, private classeSrv: ClassiService) {
+  constructor(private router: Router, private authSrv: AuthService, private classeSrv: ClassiService, private cdr: ChangeDetectorRef) {
     
   }
   ngOnInit(): void {
@@ -38,5 +38,6 @@ export class HomeComponent {
     this.classeSrv.anni$.subscribe((anni) => {
       this.anni = anni;
     })
+    this.classeSrv.reload();
   }
 }

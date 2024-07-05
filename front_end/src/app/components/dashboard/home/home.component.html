@@ -34,4 +34,21 @@
             </div>
         </div>
     </div>
+    <div class="row my-5" *ngIf="user?.ruoloUtente=='SEGRETERIA'">
+        <div class="col-12 col-md-4 my-2">
+            <div class="w-100 h-100 border border-secondary border-1 rounded-3 d-flex justify-content-center align-items-center" style="height: 20vh!important;cursor: pointer;" routerLink="/dashboard/studenti">
+                Gestione Studenti
+            </div>
+        </div>
+        <div class="col-12 col-md-4 my-2">
+            <div class="w-100 h-100 border border-secondary border-1 rounded-3 d-flex justify-content-center align-items-center" style="height: 20vh!important;cursor: pointer;" routerLink="/dashboard/docenti">
+                Gestione Docenti
+            </div>
+        </div>
+        <div class="col-12 col-md-4 my-2">
+            <div class="w-100 h-100 border border-secondary border-1 rounded-3 d-flex justify-content-center align-items-center" style="height: 20vh!important;cursor: pointer;" routerLink="/dashboard/classi">
+                Gestione Classi
+            </div>
+        </div>
+    </div>
 </div>

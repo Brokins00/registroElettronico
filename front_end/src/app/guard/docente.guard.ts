@@ -16,8 +16,10 @@ export class DocenteGuard implements CanActivate {
       map(user => {
         if (user && user.user.ruoloUtente == 'DOCENTE') {
           return true
+        } else if (user && user.user.ruoloUtente == 'SEGRETERIA') {
+          return this.router.createUrlTree(['/dashboard/home'])
         }
-        return this.router.createUrlTree(['/dashboard/home'])
+        return false;
       })
     )
   }

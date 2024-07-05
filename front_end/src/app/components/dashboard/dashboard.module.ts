@@ -12,6 +12,7 @@ import { GestioneDocentiComponent } from './gestione-docenti/gestione-docenti.co
 import { GestioneClassiComponent } from './gestione-classi/gestione-classi.component';
 import { ValutazioniComponent } from './valutazioni/valutazioni.component';
 import { CapitalizePipe } from 'src/app/pipe/capitalize.pipe';
+import { ValutazioniStudenteComponent } from './valutazioni-studente/valutazioni-studente.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CapitalizePipe } from 'src/app/pipe/capitalize.pipe';
     GestioneDocentiComponent,
     GestioneClassiComponent,
     ValutazioniComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    ValutazioniStudenteComponent
   ],
   imports: [
     CommonModule,

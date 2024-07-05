@@ -17,7 +17,7 @@ export class SegreteriaGuard implements CanActivate {
         if (user && user.user.ruoloUtente == 'SEGRETERIA') {
           return true
         }
-        return this.router.createUrlTree(['/dashboard/home'])
+        return false
       })
     )
   }

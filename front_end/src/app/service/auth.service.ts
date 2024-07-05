@@ -25,7 +25,13 @@ export class AuthService {
       tap(async (data) => {
         this.authSub.next(data);
         localStorage.setItem('user', JSON.stringify(data))
-        this.router.navigate(["/dashboard/home"])
+        if (data.user && data.user.ruoloUtente == 'SEGRETERIA') {
+          this.router.navigate(["/dashboard/home"])
+        } else if (data.user && data.user.ruoloUtente == 'DOCENTE') {
+          this.router.navigate(["/dashboard/valutazioni"])
+        } else {
+          this.router.navigate(["/dashboard/valutazioni-studente"])
+        }
       }),
       catchError(this.errors)
     )
